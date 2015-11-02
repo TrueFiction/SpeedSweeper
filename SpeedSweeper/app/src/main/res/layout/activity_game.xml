@@ -78,8 +78,6 @@
             android:layout_column="6"
             android:onClick="registerClick" />
 
-
-
         <Button
             android:background="@drawable/temp_pic2"
             android:layout_width="35dp"
@@ -263,7 +261,7 @@
             android:onClick="registerClick" />
 
         <Button
-            android:background="@drawable/pic_3"
+            android:background="@drawable/temp_pic2"
             android:layout_width="35dp"
             android:layout_height="35dp"
             android:id="@+id/tile_25"
@@ -526,12 +524,26 @@
     </GridLayout>
 
     <TextView
+
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Motherfucking Minesweeper"
+        android:id="@+id/bomb"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/pic_3"
+        android:textColor="#ffffff"
+        android:textStyle="bold|italic" />
+
+    <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Medium Text"
-        android:id="@+id/rotunda"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
+        android:id="@+id/reset_button"
+        android:layout_below="@+id/mine_field"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="26dp"
+        android:visibility="invisible"
+        android:onClick="resetGame" />
 
 </RelativeLayout>
