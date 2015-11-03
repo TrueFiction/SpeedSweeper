@@ -22,6 +22,7 @@ public class GameActivity extends AppCompatActivity {
 
     View reset;
     ArrayList<View> tiles = new ArrayList<>();
+    ArrayList<View> flaggedTile = new ArrayList<>();
     ArrayList<Integer> originalIds = new ArrayList<>();
     Random r = new Random();
     Boolean check = true;
@@ -110,14 +111,15 @@ public class GameActivity extends AppCompatActivity {
             Boolean b = explosionResult();
             return b;
         } else {
-            Boolean b = safeResult();
+            Boolean b = safeResult(v);
             return b;
         }
     }
     public Boolean explosionResult(){
         return true;
     }
-    public Boolean safeResult(){
+    public Boolean safeResult(View v){
+        checkSurroundings(v);
         return false;
     }
     /*
@@ -152,10 +154,6 @@ public class GameActivity extends AppCompatActivity {
         super.onStart();
         initializeGrid();
     }
-    /*
-    This next method is where the program is working. I have a
-        conditional test in there but just to test its reliability.
-     */
     public void registerClick(View v){
         if (check) {
             Boolean entry;
@@ -173,5 +171,86 @@ public class GameActivity extends AppCompatActivity {
         v.setBackgroundResource(R.drawable.bomb_1);
         reset.setVisibility(View.VISIBLE);
         reset.setClickable(true);
+    }
+    public void checkSurroundings(View v){
+        int focusPosition = -1;
+        for (int x = 0; x < tiles.size(); x++){
+            if (v.equals(tiles.get(x))){
+                focusPosition = x;
+            }
+        }
+        if (focusPosition <= 6){
+            if (focusPosition != 0 && focusPosition != 6){
+                flaggedTile.add(tiles.get(focusPosition + 1));
+                flaggedTile.add(tiles.get(focusPosition - 1));
+                flaggedTile.add(tiles.get(focusPosition + 6));
+                flaggedTile.add(tiles.get(focusPosition + 7));
+                flaggedTile.add(tiles.get(focusPosition + 8));
+            } else if (focusPosition == 0){
+                flaggedTile.add(tiles.get(focusPosition + 1));
+                flaggedTile.add(tiles.get(focusPosition + 7));
+                flaggedTile.add(tiles.get(focusPosition + 8));
+            } else if (focusPosition == 6){
+                flaggedTile.add(tiles.get(focusPosition - 1));
+                flaggedTile.add(tiles.get(focusPosition + 6));
+                flaggedTile.add(tiles.get(focusPosition + 7));
+            }
+        }
+        if (focusPosition >= 50){
+            if (focusPosition != 50 && focusPosition != 56){
+                flaggedTile.add(tiles.get(focusPosition + 1));
+                flaggedTile.add(tiles.get(focusPosition - 1));
+                flaggedTile.add(tiles.get(focusPosition - 6));
+                flaggedTile.add(tiles.get(focusPosition - 7));
+                flaggedTile.add(tiles.get(focusPosition - 8));
+            } else if (focusPosition == 50){
+                flaggedTile.add(tiles.get(focusPosition + 1));
+                flaggedTile.add(tiles.get(focusPosition - 7));
+                flaggedTile.add(tiles.get(focusPosition - 8));
+            } else if (focusPosition == 56){
+                flaggedTile.add(tiles.get(focusPosition - 1));
+                flaggedTile.add(tiles.get(focusPosition - 6));
+                flaggedTile.add(tiles.get(focusPosition - 7));
+            }
+        } else {
+              if (focusPosition % 7 == 0){
+                  flaggedTile.add(tiles.get(focusPosition - 6));
+                  flaggedTile.add(tiles.get(focusPosition - 7));
+                  flaggedTile.add(tiles.get(focusPosition + 1));
+                  flaggedTile.add(tiles.get(focusPosition + 7));
+                  flaggedTile.add(tiles.get(focusPosition + 8));
+              } else if ((focusPosition + 6) % 6 == 0){
+                  flaggedTile.add(tiles.get(focusPosition - 7));
+                  flaggedTile.add(tiles.get(focusPosition - 8));
+                  flaggedTile.add(tiles.get(focusPosition - 1));
+                  flaggedTile.add(tiles.get(focusPosition + 6));
+                  flaggedTile.add(tiles.get(focusPosition + 7));
+              } else {
+                  flaggedTile.add(tiles.get(focusPosition + 1));
+                  flaggedTile.add(tiles.get(focusPosition - 1));
+                  flaggedTile.add(tiles.get(focusPosition - 6));
+                  flaggedTile.add(tiles.get(focusPosition - 7));
+                  flaggedTile.add(tiles.get(focusPosition - 8));
+                  flaggedTile.add(tiles.get(focusPosition + 6));
+                  flaggedTile.add(tiles.get(focusPosition + 7));
+                  flaggedTile.add(tiles.get(focusPosition + 8));
+              }
+        }
+        decideSurroundings();
+    }
+    public void decideSurroundings(){
+        for (View v : flaggedTile){
+            if (v.getId() == R.id.bomb) {
+                break;
+            }else{
+                expand();
+            }
+        }
+    }
+    public void expand(){
+        /*
+        Here is where I would have all focus positions that are not bombs expand
+        and reveal proximity of bombs.
+         */
     }
 }
