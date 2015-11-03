@@ -1,0 +1,17 @@
+Made a few more changes. Realized a lot of my code
+from yesterday was not what needed to be written
+It works if you comment out the methods above the
+onCreate method
+
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+# On branch master
+# Changes to be committed:
+#	modified:   SpeedSweeper/.idea/misc.xml
+#	modified:   SpeedSweeper/app/build.gradle
+#	modified:   SpeedSweeper/app/src/main/res/layout/activity_game.xml
+#	modified:   SpeedSweeper/app/src/main/res/values/strings.xml
+#
+# Untracked files:
+#	SpeedSweeper/app/src/main/res/drawable/
+#
