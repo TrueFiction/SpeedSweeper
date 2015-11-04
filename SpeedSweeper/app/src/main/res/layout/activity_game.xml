@@ -529,7 +529,7 @@
         android:layout_height="100dp"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Motherfucking Minesweeper"
-        android:id="@+id/bomb"
+        android:id="@+id/caution"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:background="@drawable/pic_3"
@@ -546,4 +546,14 @@
         android:visibility="invisible"
         android:onClick="resetGame" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Small Text"
+        android:id="@+id/bomb"
+        android:layout_alignBottom="@+id/reset_button"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:visibility="invisible" />
 </RelativeLayout>

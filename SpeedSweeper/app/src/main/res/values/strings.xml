@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">SpeedSweeper</string>
     <string name="bomb"></string>
+    <string name="caution"></string>
 </resources>
