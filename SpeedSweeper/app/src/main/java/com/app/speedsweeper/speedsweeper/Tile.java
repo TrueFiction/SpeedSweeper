@@ -6,12 +6,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.AttributeSet;
 import android.view.View;
+import android.widget.Button;
+
 import java.lang.*;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.jar.Attributes;
 
-public class Tile extends View {
+public class Tile extends Button {
 
     // Informs whether this tile has had a flag placed on it
     private Boolean hasFlag = false;
@@ -21,7 +23,7 @@ public class Tile extends View {
     private Boolean isExpanded = false;
 
     // Number of bombs that surrounds this tile.
-    private int bombCount;
+    private int bombCount = 0;
     // Value of the GridLayout row this tile is positioned in.
     private int rowCoordinate;
     // Value of the GridLayout column this tile is position in.
@@ -86,6 +88,10 @@ public class Tile extends View {
 
     public int getYCoordinate() {
         return columnCoordinate;
+    }
+
+    public int addBombToCount() {
+        return bombCount + 1;
     }
 
     public void scanNeighbor() {

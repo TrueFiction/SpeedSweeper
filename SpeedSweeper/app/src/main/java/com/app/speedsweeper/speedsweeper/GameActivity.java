@@ -31,9 +31,11 @@ public class GameActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Board board = new Board(this, 7, 8, 10);
         setContentView(R.layout.activity_game);
         reset_button = findViewById(R.id.reset_button);
         reset_button.setClickable(false);
+        setContentView(board.createTiles());
     }
 
     /*
@@ -54,7 +56,7 @@ public class GameActivity extends AppCompatActivity {
      */
 
     public void initializeGrid() {
-        grabChildren();
+        //grabChildren();
         saveId();
         plantBombs();
     }
@@ -63,7 +65,7 @@ public class GameActivity extends AppCompatActivity {
     I am not at all proud of the following method, but at least after this, I have exactly what I
     want. Note that I used eclipse to generate the below code in String output.
     */
-
+/*
     public void grabChildren() {
         tiles.add(findViewById(R.id.tile_1));
         tiles.add(findViewById(R.id.tile_2));
@@ -122,6 +124,7 @@ public class GameActivity extends AppCompatActivity {
         tiles.add(findViewById(R.id.tile_55));
         tiles.add(findViewById(R.id.tile_56));
     }
+    */
 
     private void saveId() {
         for (int x = 0; x < tiles.size(); x++) {
