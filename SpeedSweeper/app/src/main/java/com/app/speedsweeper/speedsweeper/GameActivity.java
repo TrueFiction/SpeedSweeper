@@ -19,6 +19,7 @@ public class GameActivity extends AppCompatActivity {
     */
 
     View reset_button;
+    Board board;
     ArrayList<View> tiles = new ArrayList<>(), flaggedTile = new ArrayList<>(), garbage = new ArrayList<>();
     ArrayList<Integer> originalIds = new ArrayList<>();
     Random r = new Random();
@@ -31,10 +32,10 @@ public class GameActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Board board = new Board(this, 7, 8, 10);
-        setContentView(R.layout.activity_game);
-        reset_button = findViewById(R.id.reset_button);
-        reset_button.setClickable(false);
+        board = new Board(this, 7, 8, 10);
+        //setContentView(R.layout.activity_game);
+        //reset_button = findViewById(R.id.reset_button);
+        //reset_button.setClickable(false);
         setContentView(board.createTiles());
     }
 
@@ -45,7 +46,7 @@ public class GameActivity extends AppCompatActivity {
     @Override
     public void onStart() {
         super.onStart();
-        initializeGrid();
+        //initializeGrid();
     }
 
     /*
@@ -57,8 +58,8 @@ public class GameActivity extends AppCompatActivity {
 
     public void initializeGrid() {
         //grabChildren();
-        saveId();
-        plantBombs();
+        //saveId();
+        board.plantBombs();
     }
 
     /*

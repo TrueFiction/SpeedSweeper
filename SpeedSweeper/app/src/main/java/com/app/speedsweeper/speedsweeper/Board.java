@@ -15,6 +15,8 @@ import java.util.Random;
 import java.util.ArrayList;
 
 public class Board extends TableLayout {
+    //Holds GameActivity's context for resources
+    Context context;
 
     // Number of rows specified for this instance of board.
     int rows;
@@ -142,8 +144,13 @@ public class Board extends TableLayout {
         }
     };
 
-    public Board(Context context, int row, int col, int numBombs) {
-        super(context);
+    public Board(Context activityContext, int row, int col, int numBombs) {
+        super(activityContext);
+
+        ////////////////IF WE SEE RED THEN THIS LAYOUT IS GETTING TO ACTIVITY/////////////////
+
+        this.setBackgroundResource(R.color.red);
+        context = activityContext;
         rows = row;
         columns = col;
         allBombs = numBombs;
@@ -167,14 +174,14 @@ public class Board extends TableLayout {
 
     public TableLayout createTiles() {
 
-        TableLayout layout = new TableLayout(ThisApplication.getAppContext());
+        TableLayout layout = new TableLayout(context);
         layout.setLayoutParams(new TableLayout.LayoutParams(4, 5));
 
         int listIndex = 0;
         for (int x = 0; x < rows; x++) {
-            TableRow tr = new TableRow(ThisApplication.getAppContext());
+            TableRow tr = new TableRow(context);
             for (int y = 0; y < columns; y++) {
-                Tile tile = new Tile (ThisApplication.getAppContext(), varAttrSet, x, y, listIndex);
+                Tile tile = new Tile (context, varAttrSet, x, y, listIndex);
                 tile.setText("A");
                 tileCollection.add(tile);
                 listIndex++;
@@ -233,13 +240,13 @@ public class Board extends TableLayout {
                 tileCollection.get(focusPosition - getRowLength()).addBombToCount();
             }
         } else {
-            if ((focusPosition % getRowLength()) == 0) {
+            if ((focusPosition % getRowLength()) == 0 && focusPosition >= getRowLength()) {
                 tileCollection.get(focusPosition - getRowLength() - 1).addBombToCount();
                 tileCollection.get(focusPosition - getRowLength()).addBombToCount();
                 tileCollection.get(focusPosition + 1).addBombToCount();
                 tileCollection.get(focusPosition + getRowLength()).addBombToCount();
                 tileCollection.get(focusPosition + getRowLength() + 1).addBombToCount();
-            } else if ((focusPosition % getRowLength()) == getRowLength() - 1) {
+            } else if ((focusPosition % getRowLength()) == getRowLength() - 1 && focusPosition >= getRowLength()) {
                 tileCollection.get(focusPosition - getRowLength()).addBombToCount();
                 tileCollection.get(focusPosition - getRowLength() + 1).addBombToCount();
                 tileCollection.get(focusPosition - 1).addBombToCount();

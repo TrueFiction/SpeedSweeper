@@ -48,10 +48,11 @@ public class Tile extends Button {
      * them to rowCoordinate, columnCoordinate, and logicID respectively.
      */
     public Tile (Context context, AttributeSet attrs, int rowC, int colC, int index) {
-        super(context, attrs);
+        super(context);
         rowCoordinate = rowC;
         columnCoordinate = colC;
         gridOrderPosition = index;
+        /* set attributes for the button  */
     }
 
     public int getIndex() {
