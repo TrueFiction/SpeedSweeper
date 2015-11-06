@@ -3,6 +3,7 @@
     package="com.app.speedsweeper.speedsweeper">
 
     <application
+        android:name="com.app.speedsweeper.speedsweeper"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:supportsRtl="true"

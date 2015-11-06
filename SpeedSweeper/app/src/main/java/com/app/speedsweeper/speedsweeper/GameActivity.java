@@ -333,6 +333,7 @@ public class GameActivity extends AppCompatActivity {
             idea but logically incorrect as it is changing the value of flaggedTile as it is going
             through the loop.
              */
+            /*
             for (View view : flaggedTile) {
                 int id = view.getId();
                 if (id == R.id.caution) {
@@ -344,6 +345,7 @@ public class GameActivity extends AppCompatActivity {
                     view.setBackgroundResource(R.drawable.filler_tile);
                     view.setClickable(false);
                 }
+                */
                     /*
                     if (id == R.id.caution) {
                         checkGarbage(view);
@@ -360,7 +362,6 @@ public class GameActivity extends AppCompatActivity {
             flaggedTile.remove(v);
             init++;
         }
-    }
 
     /*
     The fixed numbers below may look like a nightmare, but they are based off of tiles, an AL that
