@@ -1,28 +1,61 @@
 package com.app.speedsweeper.speedsweeper;
 
-import android.app.ActionBar;
 import android.content.Context;
-import android.graphics.drawable.Drawable;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
-import android.widget.RelativeLayout;
 import java.lang.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Random;
-import java.util.jar.Attributes;
+
+/********
+ *
+ *  There are many methods and variables in this class that, if put to good use, will allow for
+ *  functional construction. I believe that I have been ignoring the capabilities of this class
+ *  because I have been trying to determine whether or not the link between this class and the
+ *  TileAdapter is logically sound. At this point, I am confident that it is; the errors that arise
+ *  now result from the discrepancy between this class's capabilities and how it is being used.
+ *
+ *  Having realized this, I now realize how important it is to have a programmatic structure that
+ *  makes use of object hierarchy as much as possible.
+ *
+ *  Note: I read about Model-View Controllers and how important they are when creating a GUI. With
+ *  this model in mind, perhaps GameActivity should play the role of controller. As for the other
+ *  methods, it is clear that TileAdapter is responsible for ActionEvent processing, but a
+ *
+ ********/
 
 public class Tile extends Button {
 
+    /*
+    The message of the block comment below applies to these three variables as well. Below is a quick
+    jotting of the implementation of one of these variables.
+        @Override
+        public Parcelable.Creator<MotionEvent> getMotionEventCreator() {
+            // flagClicked = onLongClickListener(); // Returns int[x]
+            // if (flagClicked != null)
+            //      toggleFlag = flagClicked.getPointerId(x);
+            return toggleFlag;
+        }   // Sends index value to GameActivity, where it is passed on to Board.
+            // Board is configured by methods called in Board that have an effect on Tile
+     It seems clear that this is not the right way to go about implementing this idea. With this
+     approach as a foundation, however, I believe the issues will be resolved.
+     */
+
     // Informs whether this tile has had a flag placed on it
-    private Boolean hasFlag = false;
+    private Boolean flagStatus = false;
     // Informs whether tile is a bomb
     private Boolean isBomb = false;
     // Informs whether tile has been expanded
     private Boolean isExpanded = false;
+
+    /*
+    The four integer variable below can (almost exclusively) be used to accurately configure how
+    TileAdapter inflates the hierarchical merging of the Tile objects and the Board object. In order to do
+    this, the constructor for each object must be configured correctly, and the two XML files they
+    reside in must be configured so that their tag is represented by a NameSpace with a particular
+    style that directly corresponds to each object's field and function.
+     */
 
     // Number of bombs that surrounds this tile.
     private int bombCount = 0;
@@ -30,20 +63,8 @@ public class Tile extends Button {
     private int rowPosition;
     // Value of the GridLayout column this tile is position in.
     private int columnPosition;
-    // Position of this view in AL tileCollection.
+    // Position of this view in AL tiles.
     private int gridOrderPosition;
-
-    // The previous two variables provide unique coordinates of position. They are passed into Tile
-    // class constructor in order to create a connection between this Tile to an existing, XML
-    // created button (by reference) which is positioned on the grid layout with coordinate values
-    // that match those of the above variables.
-
-    // Alternatively, these two variables would determine the coordinate position of this Tile on a
-    // GridLayout - in other words, starting a new approach to the creation of this application.
-    // If this were to be done, all of the pre-existing XML code is effectively useless.
-
-    // The tile, before this matching process, is hypothetical, as it has neither been given any
-    // XML attributes, nor has it been assigned to a view that already exists),
 
     /*
      * Constructor takes params rowC, colC, identity. Takes the corresponding values and assigns
@@ -54,15 +75,12 @@ public class Tile extends Button {
         super(context);
     }
 
-    public Tile (Context context, int rowC, int colC, int index) {
-        super(context);
+    public Tile (Context context, AttributeSet attrs, int defStyle) {
+        super(context, attrs);
         this.setText("A");
         this.setWidth(35);
         this.setHeight(35);
         this.setBackgroundResource(R.drawable.temp_pic2);
-        rowPosition = rowC;
-        columnPosition = colC;
-        gridOrderPosition = index;
     }
 
     public int getIndex() {
@@ -73,12 +91,12 @@ public class Tile extends Button {
         gridOrderPosition = position;
     }
 
-    public void setHasFlag(Boolean b) {
-        hasFlag = b;
+    public void setFlagStatus(Boolean b) {
+        flagStatus = b;
     }
 
-    public Boolean getHasFlag() {
-        return hasFlag;
+    public Boolean getFlagStatus() {
+        return flagStatus;
     }
 
     public void setBomb(boolean b) {
@@ -117,11 +135,6 @@ public class Tile extends Button {
         bombCount++;
     }
 
-    public void scanNeighbor() {
-        //Check surrounding views.
-        // if
-    }
-
     /**
      * Next method is true if bombCount is greater than zero. What this means is that, assuming
      * scanNeighbor has been called on the view at hand and bombCount is the number of surrounding
@@ -135,7 +148,6 @@ public class Tile extends Button {
 
     public void expandTile(View v, int drawable){
         v.setBackgroundResource(drawable);
-        // int drawable example: R.id.detects_one
     }
 
     /**
