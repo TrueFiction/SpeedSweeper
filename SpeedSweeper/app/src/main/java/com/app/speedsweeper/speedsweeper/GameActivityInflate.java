@@ -6,6 +6,8 @@ import android.os.Bundle;
 
 import java.lang.*;
 import java.util.ArrayList;
+
+import android.view.View;
 import android.widget.GridView;
 import android.widget.LinearLayout;
 
@@ -18,7 +20,7 @@ import android.widget.LinearLayout;
  * This class will serve as a hub between display functions (in TileAdapter) and value/logic functions (in Board and Tile).
  */
 
-public class GameActivity extends AppCompatActivity {
+public class GameActivityInflate extends AppCompatActivity {
     // Necessary for inflation.
     GridView gridView;
 
@@ -31,7 +33,7 @@ public class GameActivity extends AppCompatActivity {
     // This is not where this should be declared. Ideally the last three positions would take
     // values from decision user makes.
 
-
+    @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.grid_parent);
@@ -45,6 +47,7 @@ public class GameActivity extends AppCompatActivity {
     @Override
     public void onStart(){
         super.onStart();
+
     }
 
     /**
@@ -64,6 +67,12 @@ public class GameActivity extends AppCompatActivity {
         startBoard.populateTileCollection();
         startBoard.plantBombs();
         tiles = startBoard.getTileCollection();
+
+        LinearLayout layout = (LinearLayout) findViewById(R.id.linear_layout);
+
+        for (Tile t : tiles){
+            layout.addView(t);
+        }
 
         gridView = (GridView) findViewById(R.id.grid);
         gridView.setAdapter(new TileAdapter(this, tiles, gridView));

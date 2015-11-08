@@ -9,8 +9,6 @@ import java.util.ArrayList;
 
 public class Board extends GridView {
     
-    GameActivity GA;
-    
     ArrayList<Tile> tileCollection;
     
     Tile tile;
@@ -90,6 +88,7 @@ public class Board extends GridView {
                 for (int y = 0; y < getColumnCount(); y++) {
                     Tile tile = new Tile(c, y, x, index);
                     tileCollection.add(tile);
+                    tile.setId(index);
                     index++;
                 }
                 }

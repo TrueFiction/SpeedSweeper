@@ -118,14 +118,14 @@ public class Tile extends Button {
     }
 
     public void scanNeighbor() {
-        //Check surrounding tiles.
+        //Check surrounding views.
         // if
     }
 
     /**
      * Next method is true if bombCount is greater than zero. What this means is that, assuming
      * scanNeighbor has been called on the view at hand and bombCount is the number of surrounding
-     * tiles whose isBomb value is true, the tile should display the number of bombs that surround it.
+     * views whose isBomb value is true, the tile should display the number of bombs that surround it.
      * Therefore, if this returns true, then (by use of another method) the background of this tile
      * should be changed to a picture that displays the value of bombCount.
      */
@@ -139,7 +139,7 @@ public class Tile extends Button {
     }
 
     /**
-     * Not a setter for field variable hasFlag. Adds flags to tiles on hold length of 0.5 seconds.
+     * Not a setter for field variable hasFlag. Adds flags to views on hold length of 0.5 seconds.
      */
     public void setFlag(){
         // onLongClickListener

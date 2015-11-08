@@ -29,7 +29,7 @@ import android.widget.TextView;
     **Old Variables kept for reference**
     ************************************
     View reset_button;
-    ArrayList<View> tiles = new ArrayList<>(), flaggedTile = new ArrayList<>(), garbage = new ArrayList<>();
+    ArrayList<View> views = new ArrayList<>(), flaggedTile = new ArrayList<>(), garbage = new ArrayList<>();
     ArrayList<Integer> originalIds = new ArrayList<>();
     Random r = new Random();
     Boolean gameInProgress = true;
@@ -90,9 +90,9 @@ import android.widget.TextView;
 
     */
 /*
-    initializeGrid calls three methods. grabChildren populates ArrayList<View> tiles with all the
+    initializeGrid calls three methods. grabChildren populates ArrayList<View> views with all the
     buttons already created in XML. saveID populates ArrayList<Integer> originalIds with each view's
-    original name. plantBombs first selects 7 tiles to be bombs, then identifies all tiles surrounding
+    original name. plantBombs first selects 7 views to be bombs, then identifies all views surrounding
     the bombs, preparing them to display a number that represents how many bombs are in proximity.
      *//*
 
@@ -114,70 +114,70 @@ import android.widget.TextView;
 */
 /*
     public void grabChildren() {
-        tiles.add(findViewById(R.id.tile_1));
-        tiles.add(findViewById(R.id.tile_2));
-        tiles.add(findViewById(R.id.tile_3));
-        tiles.add(findViewById(R.id.tile_4));
-        tiles.add(findViewById(R.id.tile_5));
-        tiles.add(findViewById(R.id.tile_6));
-        tiles.add(findViewById(R.id.tile_7));
-        tiles.add(findViewById(R.id.tile_8));
-        tiles.add(findViewById(R.id.tile_9));
-        tiles.add(findViewById(R.id.tile_10));
-        tiles.add(findViewById(R.id.tile_11));
-        tiles.add(findViewById(R.id.tile_12));
-        tiles.add(findViewById(R.id.tile_13));
-        tiles.add(findViewById(R.id.tile_14));
-        tiles.add(findViewById(R.id.tile_15));
-        tiles.add(findViewById(R.id.tile_16));
-        tiles.add(findViewById(R.id.tile_17));
-        tiles.add(findViewById(R.id.tile_18));
-        tiles.add(findViewById(R.id.tile_19));
-        tiles.add(findViewById(R.id.tile_20));
-        tiles.add(findViewById(R.id.tile_21));
-        tiles.add(findViewById(R.id.tile_22));
-        tiles.add(findViewById(R.id.tile_23));
-        tiles.add(findViewById(R.id.tile_24));
-        tiles.add(findViewById(R.id.tile_25));
-        tiles.add(findViewById(R.id.tile_26));
-        tiles.add(findViewById(R.id.tile_27));
-        tiles.add(findViewById(R.id.tile_28));
-        tiles.add(findViewById(R.id.tile_29));
-        tiles.add(findViewById(R.id.tile_30));
-        tiles.add(findViewById(R.id.tile_31));
-        tiles.add(findViewById(R.id.tile_32));
-        tiles.add(findViewById(R.id.tile_33));
-        tiles.add(findViewById(R.id.tile_34));
-        tiles.add(findViewById(R.id.tile_35));
-        tiles.add(findViewById(R.id.tile_36));
-        tiles.add(findViewById(R.id.tile_37));
-        tiles.add(findViewById(R.id.tile_38));
-        tiles.add(findViewById(R.id.tile_39));
-        tiles.add(findViewById(R.id.tile_40));
-        tiles.add(findViewById(R.id.tile_41));
-        tiles.add(findViewById(R.id.tile_42));
-        tiles.add(findViewById(R.id.tile_43));
-        tiles.add(findViewById(R.id.tile_44));
-        tiles.add(findViewById(R.id.tile_45));
-        tiles.add(findViewById(R.id.tile_46));
-        tiles.add(findViewById(R.id.tile_47));
-        tiles.add(findViewById(R.id.tile_48));
-        tiles.add(findViewById(R.id.tile_49));
-        tiles.add(findViewById(R.id.tile_50));
-        tiles.add(findViewById(R.id.tile_51));
-        tiles.add(findViewById(R.id.tile_52));
-        tiles.add(findViewById(R.id.tile_53));
-        tiles.add(findViewById(R.id.tile_54));
-        tiles.add(findViewById(R.id.tile_55));
-        tiles.add(findViewById(R.id.tile_56));
+        views.add(findViewById(R.id.tile_1));
+        views.add(findViewById(R.id.tile_2));
+        views.add(findViewById(R.id.tile_3));
+        views.add(findViewById(R.id.tile_4));
+        views.add(findViewById(R.id.tile_5));
+        views.add(findViewById(R.id.tile_6));
+        views.add(findViewById(R.id.tile_7));
+        views.add(findViewById(R.id.tile_8));
+        views.add(findViewById(R.id.tile_9));
+        views.add(findViewById(R.id.tile_10));
+        views.add(findViewById(R.id.tile_11));
+        views.add(findViewById(R.id.tile_12));
+        views.add(findViewById(R.id.tile_13));
+        views.add(findViewById(R.id.tile_14));
+        views.add(findViewById(R.id.tile_15));
+        views.add(findViewById(R.id.tile_16));
+        views.add(findViewById(R.id.tile_17));
+        views.add(findViewById(R.id.tile_18));
+        views.add(findViewById(R.id.tile_19));
+        views.add(findViewById(R.id.tile_20));
+        views.add(findViewById(R.id.tile_21));
+        views.add(findViewById(R.id.tile_22));
+        views.add(findViewById(R.id.tile_23));
+        views.add(findViewById(R.id.tile_24));
+        views.add(findViewById(R.id.tile_25));
+        views.add(findViewById(R.id.tile_26));
+        views.add(findViewById(R.id.tile_27));
+        views.add(findViewById(R.id.tile_28));
+        views.add(findViewById(R.id.tile_29));
+        views.add(findViewById(R.id.tile_30));
+        views.add(findViewById(R.id.tile_31));
+        views.add(findViewById(R.id.tile_32));
+        views.add(findViewById(R.id.tile_33));
+        views.add(findViewById(R.id.tile_34));
+        views.add(findViewById(R.id.tile_35));
+        views.add(findViewById(R.id.tile_36));
+        views.add(findViewById(R.id.tile_37));
+        views.add(findViewById(R.id.tile_38));
+        views.add(findViewById(R.id.tile_39));
+        views.add(findViewById(R.id.tile_40));
+        views.add(findViewById(R.id.tile_41));
+        views.add(findViewById(R.id.tile_42));
+        views.add(findViewById(R.id.tile_43));
+        views.add(findViewById(R.id.tile_44));
+        views.add(findViewById(R.id.tile_45));
+        views.add(findViewById(R.id.tile_46));
+        views.add(findViewById(R.id.tile_47));
+        views.add(findViewById(R.id.tile_48));
+        views.add(findViewById(R.id.tile_49));
+        views.add(findViewById(R.id.tile_50));
+        views.add(findViewById(R.id.tile_51));
+        views.add(findViewById(R.id.tile_52));
+        views.add(findViewById(R.id.tile_53));
+        views.add(findViewById(R.id.tile_54));
+        views.add(findViewById(R.id.tile_55));
+        views.add(findViewById(R.id.tile_56));
     }
     *//*
 
 */
 /*
     private void saveId() {
-        for (int x = 0; x < tiles.size(); x++) {
-            originalIds.add(tiles.get(x).getId());
+        for (int x = 0; x < views.size(); x++) {
+            originalIds.add(views.get(x).getId());
         }
     }
 *//*
@@ -185,13 +185,13 @@ import android.widget.TextView;
     */
 /*
     Plant bombs. Planting = true is on its way to becoming completely unnecessary, but I'll leave it
-    for keepsake for now. A loop is created where seven random tiles are given the id that is equal
-    to R.id.bomb in value. Later on, tiles are checked for the bomb ID and appropriate actions
+    for keepsake for now. A loop is created where seven random views are given the id that is equal
+    to R.id.bomb in value. Later on, views are checked for the bomb ID and appropriate actions
     ensue.
 
     After their id has been set, another set of actions have to occur. For each tile selected, its
-    immediate surroundings must be gathered and given the id equal to R.id.caution. All such tiles
-    are the tiles that will display a number to inform the player how many bombs are in the focus
+    immediate surroundings must be gathered and given the id equal to R.id.caution. All such views
+    are the views that will display a number to inform the player how many bombs are in the focus
     tile's proximity.
      *//*
 
@@ -199,7 +199,7 @@ import android.widget.TextView;
 /*
     public void plantBombs() {
         for (int x = 0; x < 7; x++) {
-            View unluckyTile = tiles.get(r.nextInt(tiles.size()));
+            View unluckyTile = views.get(r.nextInt(views.size()));
             unluckyTile.setId(R.id.bomb);
             scan(unluckyTile);
             for (int y = 0; y < flaggedTile.size(); y++) {
@@ -218,7 +218,7 @@ import android.widget.TextView;
     the game is currently in the situation where a bomb has been clicked and the user has not reset
     the game by pressing the reset button. This situation is true if gameInProgress is false, and
     as can be seen below, if gameInProgress is false, registerClick performs no action. The result
-    of this is that the user cannot click more tiles if a bomb tile has been clicked, that is until
+    of this is that the user cannot click more views if a bomb tile has been clicked, that is until
     the reset_button is clicked.
 
     Then, checkTile is called with View v. If checkTile returns true, the game ends as endGame is
@@ -262,7 +262,7 @@ import android.widget.TextView;
     checkTile simply checks the id of the tile. If the id equals the value of R.id.bomb, true is
     returned, resulting in endGame being called in registerClick. If the aforementioned equality is
     not true, then safeResult is called, a method that begins the complicated process of expanding
-    tiles.
+    views.
      *//*
 
 */
@@ -313,17 +313,17 @@ import android.widget.TextView;
 
 	USE al.clone();
 
-	Once these tiles are added to flaggedTile, their ID needs to be checked.
+	Once these views are added to flaggedTile, their ID needs to be checked.
 	 If ID == R.id.caution, expand, stop.
 	 If ID == bomb, stop
 	 Else, expand, gameInProgress surroundings.
-	Three different pathways that need to occur sequentially for all tiles.
-	 First, all default id tiles need to expand.
-	 Then, all caution tiles need to expand. Surroundings should NOT be checked for caution                 tiles.
-	 Finally, all caution tiles and bomb tiles need to be added to the garbage, as the computer
+	Three different pathways that need to occur sequentially for all views.
+	 First, all default id views need to expand.
+	 Then, all caution views need to expand. Surroundings should NOT be checked for caution                 views.
+	 Finally, all caution views and bomb views need to be added to the garbage, as the computer
 	 should not perform redundant calculations.
 	 Therefore, when there are already objects in garbage, flaggedTile should not receive
-	 any tiles that are in the garbage.
+	 any views that are in the garbage.
 	   Right now, flaggedTile does receive them, and then the sort method can be called to
 	   correct the flaggedTile by checking the garbage.
 
@@ -350,7 +350,7 @@ import android.widget.TextView;
         if (flaggedTile.size() > 0 || init == 0) {
         */
 /*
-        First, the tile clicked has to call scan to gameInProgress the tiles surrounding the selected
+        First, the tile clicked has to call scan to gameInProgress the views surrounding the selected
         tile.
         *//*
 
@@ -361,7 +361,7 @@ import android.widget.TextView;
         Now, each tile in flaggedTile has to be checked for its id. Using a boolean value to
         gameInProgress to see if current view is already in garbage. Tiles are added to garbage if their id
         is caution or bomb. This is done for two reasons: to prevent the program from checking the
-        tiles surrounding the tile in focus, and to save memory - accomplished by preventing the
+        views surrounding the tile in focus, and to save memory - accomplished by preventing the
         tile in focus from being checked for its id and whether it should be added to the garbage
         (oddly, by checking whether or not it is already in the garbage. the difference is that I
         want to have this checking mechanism occur immediately before and after ids are checked.)
@@ -471,75 +471,75 @@ import android.widget.TextView;
 
     */
 /*
-    The fixed numbers below may look like a nightmare, but they are based off of tiles, an AL that
+    The fixed numbers below may look like a nightmare, but they are based off of views, an AL that
     serves as a virtual model for the buttons in XML. I confirm that the method below accurately
-    adds all tiles that surround the focus tile to AL flaggedTile.
+    adds all views that surround the focus tile to AL flaggedTile.
      *//*
 
 */
 /*
     public void scan(View v) {
         int focusPosition = -1;
-        for (int x = 0; x < tiles.size(); x++) {
-            if (v.equals(tiles.get(x))) {
+        for (int x = 0; x < views.size(); x++) {
+            if (v.equals(views.get(x))) {
                 focusPosition = x;
             }
         }
         flaggedTile.add(v);
         if (focusPosition <= 6) {
             if (focusPosition != 0 && focusPosition != 6) {
-                flaggedTile.add(tiles.get(focusPosition + 1));
-                flaggedTile.add(tiles.get(focusPosition - 1));
-                flaggedTile.add(tiles.get(focusPosition + 6));
-                flaggedTile.add(tiles.get(focusPosition + 7));
-                flaggedTile.add(tiles.get(focusPosition + 8));
+                flaggedTile.add(views.get(focusPosition + 1));
+                flaggedTile.add(views.get(focusPosition - 1));
+                flaggedTile.add(views.get(focusPosition + 6));
+                flaggedTile.add(views.get(focusPosition + 7));
+                flaggedTile.add(views.get(focusPosition + 8));
             } else if (focusPosition == 0) {
-                flaggedTile.add(tiles.get(focusPosition + 1));
-                flaggedTile.add(tiles.get(focusPosition + 7));
-                flaggedTile.add(tiles.get(focusPosition + 8));
+                flaggedTile.add(views.get(focusPosition + 1));
+                flaggedTile.add(views.get(focusPosition + 7));
+                flaggedTile.add(views.get(focusPosition + 8));
             } else if (focusPosition == 6) {
-                flaggedTile.add(tiles.get(focusPosition - 1));
-                flaggedTile.add(tiles.get(focusPosition + 6));
-                flaggedTile.add(tiles.get(focusPosition + 7));
+                flaggedTile.add(views.get(focusPosition - 1));
+                flaggedTile.add(views.get(focusPosition + 6));
+                flaggedTile.add(views.get(focusPosition + 7));
             }
         } else if (focusPosition >= 49) {
             if (focusPosition != 49 && focusPosition != 55) {
-                flaggedTile.add(tiles.get(focusPosition + 1));
-                flaggedTile.add(tiles.get(focusPosition - 1));
-                flaggedTile.add(tiles.get(focusPosition - 6));
-                flaggedTile.add(tiles.get(focusPosition - 7));
-                flaggedTile.add(tiles.get(focusPosition - 8));
+                flaggedTile.add(views.get(focusPosition + 1));
+                flaggedTile.add(views.get(focusPosition - 1));
+                flaggedTile.add(views.get(focusPosition - 6));
+                flaggedTile.add(views.get(focusPosition - 7));
+                flaggedTile.add(views.get(focusPosition - 8));
             } else if (focusPosition == 49) {
-                flaggedTile.add(tiles.get(focusPosition + 1));
-                flaggedTile.add(tiles.get(focusPosition - 7));
-                flaggedTile.add(tiles.get(focusPosition - 8));
+                flaggedTile.add(views.get(focusPosition + 1));
+                flaggedTile.add(views.get(focusPosition - 7));
+                flaggedTile.add(views.get(focusPosition - 8));
             } else if (focusPosition == 55) {
-                flaggedTile.add(tiles.get(focusPosition - 1));
-                flaggedTile.add(tiles.get(focusPosition - 6));
-                flaggedTile.add(tiles.get(focusPosition - 7));
+                flaggedTile.add(views.get(focusPosition - 1));
+                flaggedTile.add(views.get(focusPosition - 6));
+                flaggedTile.add(views.get(focusPosition - 7));
             }
         } else if (focusPosition < 49 && focusPosition > 6) {
             if (focusPosition % 7 == 0) {
-                flaggedTile.add(tiles.get(focusPosition - 6));
-                flaggedTile.add(tiles.get(focusPosition - 7));
-                flaggedTile.add(tiles.get(focusPosition + 1));
-                flaggedTile.add(tiles.get(focusPosition + 7));
-                flaggedTile.add(tiles.get(focusPosition + 8));
+                flaggedTile.add(views.get(focusPosition - 6));
+                flaggedTile.add(views.get(focusPosition - 7));
+                flaggedTile.add(views.get(focusPosition + 1));
+                flaggedTile.add(views.get(focusPosition + 7));
+                flaggedTile.add(views.get(focusPosition + 8));
             } else if (focusPosition == 13 || focusPosition == 20 || focusPosition == 27 || focusPosition == 34 || focusPosition == 41 || focusPosition == 48) {
-                flaggedTile.add(tiles.get(focusPosition - 7));
-                flaggedTile.add(tiles.get(focusPosition - 8));
-                flaggedTile.add(tiles.get(focusPosition - 1));
-                flaggedTile.add(tiles.get(focusPosition + 6));
-                flaggedTile.add(tiles.get(focusPosition + 7));
+                flaggedTile.add(views.get(focusPosition - 7));
+                flaggedTile.add(views.get(focusPosition - 8));
+                flaggedTile.add(views.get(focusPosition - 1));
+                flaggedTile.add(views.get(focusPosition + 6));
+                flaggedTile.add(views.get(focusPosition + 7));
             } else {
-                flaggedTile.add(tiles.get(focusPosition + 1));
-                flaggedTile.add(tiles.get(focusPosition - 1));
-                flaggedTile.add(tiles.get(focusPosition - 6));
-                flaggedTile.add(tiles.get(focusPosition - 7));
-                flaggedTile.add(tiles.get(focusPosition - 8));
-                flaggedTile.add(tiles.get(focusPosition + 6));
-                flaggedTile.add(tiles.get(focusPosition + 7));
-                flaggedTile.add(tiles.get(focusPosition + 8));
+                flaggedTile.add(views.get(focusPosition + 1));
+                flaggedTile.add(views.get(focusPosition - 1));
+                flaggedTile.add(views.get(focusPosition - 6));
+                flaggedTile.add(views.get(focusPosition - 7));
+                flaggedTile.add(views.get(focusPosition - 8));
+                flaggedTile.add(views.get(focusPosition + 6));
+                flaggedTile.add(views.get(focusPosition + 7));
+                flaggedTile.add(views.get(focusPosition + 8));
             }
         }
     }
@@ -547,8 +547,8 @@ import android.widget.TextView;
 
     */
 /*
-    The method below simply checks to see if there are any tiles in AL flaggedTile that have already
-    been checked. Yes, AL garbage is meant to be populated with tiles that have already been
+    The method below simply checks to see if there are any views in AL flaggedTile that have already
+    been checked. Yes, AL garbage is meant to be populated with views that have already been
     evaluated and expanded.
      *//*
 
@@ -574,15 +574,15 @@ import android.widget.TextView;
 /*
     This method is rather haphazardly structured, but through demonstration you would find that it
     works perfectly. It could probably be optimized, but for now it is a good structure. The current
-    focus is on the expansion of tiles. Nevertheless, resetGame is called when reset_button is
+    focus is on the expansion of views. Nevertheless, resetGame is called when reset_button is
     clicked. It essentially reverses all attribute related transformations and quantity changes.
      *//*
 
 */
 /*
     public void resetGame(View v) {
-        for (int x = 0; x < tiles.size(); x++) {
-            View Tile = tiles.get(x);
+        for (int x = 0; x < views.size(); x++) {
+            View Tile = views.get(x);
             Tile.setId(originalIds.get(x));
             Tile.setBackgroundResource(R.drawable.temp_pic2);
             Tile.setClickable(true);
@@ -660,5 +660,5 @@ import android.widget.TextView;
 /*
     A good, functional framework has been established, although many of the functions revolve
     around the focus tile. It is now time to either change the focus tile or call the functions
-    on all tiles. I prefer to change the focus tile - I do not want anything to be recursive (I think).
+    on all views. I prefer to change the focus tile - I do not want anything to be recursive (I think).
     */
