@@ -1,5 +1,6 @@
 package com.app.speedsweeper.speedsweeper;
 
+import android.app.ActionBar;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
@@ -7,9 +8,10 @@ import android.os.Bundle;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.Button;
-
+import android.widget.RelativeLayout;
 import java.lang.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Random;
 import java.util.jar.Attributes;
 
@@ -25,9 +27,9 @@ public class Tile extends Button {
     // Number of bombs that surrounds this tile.
     private int bombCount = 0;
     // Value of the GridLayout row this tile is positioned in.
-    private int rowCoordinate;
+    private int rowPosition;
     // Value of the GridLayout column this tile is position in.
-    private int columnCoordinate;
+    private int columnPosition;
     // Position of this view in AL tileCollection.
     private int gridOrderPosition;
 
@@ -47,16 +49,28 @@ public class Tile extends Button {
      * Constructor takes params rowC, colC, identity. Takes the corresponding values and assigns
      * them to rowCoordinate, columnCoordinate, and logicID respectively.
      */
-    public Tile (Context context, AttributeSet attrs, int rowC, int colC, int index) {
+
+    public Tile (Context context){
         super(context);
-        rowCoordinate = rowC;
-        columnCoordinate = colC;
+    }
+
+    public Tile (Context context, int rowC, int colC, int index) {
+        super(context);
+        this.setText("A");
+        this.setWidth(35);
+        this.setHeight(35);
+        this.setBackgroundResource(R.drawable.temp_pic2);
+        rowPosition = rowC;
+        columnPosition = colC;
         gridOrderPosition = index;
-        /* set attributes for the button  */
     }
 
     public int getIndex() {
         return gridOrderPosition;
+    }
+
+    public void setIndex(int position) {
+        gridOrderPosition = position;
     }
 
     public void setHasFlag(Boolean b) {
@@ -67,7 +81,7 @@ public class Tile extends Button {
         return hasFlag;
     }
 
-    public void setIsBomb(Boolean b) {
+    public void setBomb(boolean b) {
         isBomb = b;
     }
 
@@ -76,23 +90,31 @@ public class Tile extends Button {
     }
 
     public void setIsExpanded(Boolean b) {
-        isBomb = b;
+        isExpanded = b;
     }
 
     public Boolean getIsExpanded() {
-        return isBomb;
+        return isExpanded;
     }
 
     public int getXCoordinate() {
-        return rowCoordinate;
+        return rowPosition;
+    }
+
+    public void setXCoordinate(int x) {
+        rowPosition = x;
     }
 
     public int getYCoordinate() {
-        return columnCoordinate;
+        return columnPosition;
     }
 
-    public int addBombToCount() {
-        return bombCount + 1;
+    public void setYCoordinate(int y) {
+        rowPosition = y;
+    }
+
+    public void addBombToCount() {
+        bombCount++;
     }
 
     public void scanNeighbor() {

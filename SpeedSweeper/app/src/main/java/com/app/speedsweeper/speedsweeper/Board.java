@@ -1,159 +1,58 @@
 package com.app.speedsweeper.speedsweeper;
 
 import android.content.Context;
-import android.content.res.TypedArray;
-import android.graphics.Color;
 import android.util.AttributeSet;
-import android.view.View;
 import android.widget.Button;
-import android.widget.GridLayout;
-import android.widget.LinearLayout;
-import android.widget.TableLayout;
-import android.widget.TableRow;
-import android.widget.TextView;
+import android.widget.GridView;
 import java.util.Random;
 import java.util.ArrayList;
 
-public class Board extends TableLayout {
-    //Holds GameActivity's context for resources
-    Context context;
+public class Board extends GridView {
+    
+    GameActivity GA;
+    
+    ArrayList<Tile> tileCollection;
+    
+    Tile tile;
+
+    Context c;
 
     // Number of rows specified for this instance of board.
-    int rows;
+    static int rows;
     // Number of columns specified for this instance of board.
-    int columns;
+    static int columns;
     // Total number of bombs that this board contains.
-    int allBombs;
-
-    // Collection of all Tiles.
-    ArrayList<Tile> tileCollection = new ArrayList<>();
+    static int allBombs;
 
     // Random object for improved gameplay (see plantBombs).
     Random rand = new Random();
 
-    //
-    AttributeSet varAttrSet = new AttributeSet() {
-        @Override
-        public int getAttributeCount() {
-            return 0;
-        }
+    public Board(Context context) {
+        super(context);
+        rows = 8;
+        columns = 7;
+        allBombs = 7;
+    }
 
-        @Override
-        public String getAttributeName(int index) {
-            return null;
-        }
+    public Board(Context context, AttributeSet attrs) {
+        super(context, attrs);
+    }
 
-        @Override
-        public String getAttributeValue(int index) {
-            return null;
-        }
+    public Board(Context context, AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+    }
 
-        @Override
-        public String getAttributeValue(String namespace, String name) {
-            return null;
-        }
+    public Board(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+        super(context, attrs, defStyleAttr, defStyleRes);
+    }
 
-        @Override
-        public String getPositionDescription() {
-            return null;
-        }
-
-        @Override
-        public int getAttributeNameResource(int index) {
-            return 0;
-        }
-
-        @Override
-        public int getAttributeListValue(String namespace, String attribute, String[] options, int defaultValue) {
-            return 0;
-        }
-
-        @Override
-        public boolean getAttributeBooleanValue(String namespace, String attribute, boolean defaultValue) {
-            return false;
-        }
-
-        @Override
-        public int getAttributeResourceValue(String namespace, String attribute, int defaultValue) {
-            return 0;
-        }
-
-        @Override
-        public int getAttributeIntValue(String namespace, String attribute, int defaultValue) {
-            return 0;
-        }
-
-        @Override
-        public int getAttributeUnsignedIntValue(String namespace, String attribute, int defaultValue) {
-            return 0;
-        }
-
-        @Override
-        public float getAttributeFloatValue(String namespace, String attribute, float defaultValue) {
-            return 0;
-        }
-
-        @Override
-        public int getAttributeListValue(int index, String[] options, int defaultValue) {
-            return 0;
-        }
-
-        @Override
-        public boolean getAttributeBooleanValue(int index, boolean defaultValue) {
-            return false;
-        }
-
-        @Override
-        public int getAttributeResourceValue(int index, int defaultValue) {
-            return 0;
-        }
-
-        @Override
-        public int getAttributeIntValue(int index, int defaultValue) {
-            return 0;
-        }
-
-        @Override
-        public int getAttributeUnsignedIntValue(int index, int defaultValue) {
-            return 0;
-        }
-
-        @Override
-        public float getAttributeFloatValue(int index, float defaultValue) {
-            return 0;
-        }
-
-        @Override
-        public String getIdAttribute() {
-            return null;
-        }
-
-        @Override
-        public String getClassAttribute() {
-            return null;
-        }
-
-        @Override
-        public int getIdAttributeResourceValue(int defaultValue) {
-            return 0;
-        }
-
-        @Override
-        public int getStyleAttribute() {
-            return 0;
-        }
-    };
-
-    public Board(Context activityContext, int row, int col, int numBombs) {
-        super(activityContext);
-
-        ////////////////IF WE SEE RED THEN THIS LAYOUT IS GETTING TO ACTIVITY/////////////////
-
-        this.setBackgroundResource(R.color.red);
-        context = activityContext;
+    public Board(Context context, int row, int col, int numBombs) {
+        super(context);
+        c = context;
         rows = row;
         columns = col;
         allBombs = numBombs;
+        tileCollection = new ArrayList<>(rows*columns);
     }
 
     private int[] selectBombPositions() {
@@ -164,105 +63,109 @@ public class Board extends TableLayout {
         return bombPositions;
     }
 
-    public int getRowLength() {
+    public ArrayList<Tile> getTileCollection(){
+        return tileCollection;
+    }
+
+    public int getRowCount() {
         return columns;
     }
 
-    public int getColumnLength() {
+    public void setRowCount(int r) {
+        columns = r;
+    }
+
+    public int getColumnCount() {
         return rows;
     }
 
-    public TableLayout createTiles() {
-
-        TableLayout layout = new TableLayout(context);
-        layout.setLayoutParams(new TableLayout.LayoutParams(4, 5));
-
-        int listIndex = 0;
-        for (int x = 0; x < rows; x++) {
-            TableRow tr = new TableRow(context);
-            for (int y = 0; y < columns; y++) {
-                Tile tile = new Tile (context, varAttrSet, x, y, listIndex);
-                tile.setText("A");
-                tileCollection.add(tile);
-                listIndex++;
-                tr.addView(tile, 35, 35);
-            }
-            layout.addView(tr);
-
-        }
-        return layout;
+    public void setColumnCount(int c) {
+        rows = c;
     }
-           /* int [] attributes = new int [] {android.R.attr.background, android.R.attr.layout_width,
-            android.R.attr.layout_height, android.R.attr.id, android.R.attr.onClick,
-            android.R.attr.layout_row, android.R.attr.layout_column, android.R.attr.visibility};*/
 
-    public void plantBombs() {
+    public void populateTileCollection(){
+        int index = 0;
+        if (tileCollection.size() < getRowCount() * getColumnCount()) {
+            for (int x = 0; x < getRowCount(); x++) {
+                for (int y = 0; y < getColumnCount(); y++) {
+                    Tile tile = new Tile(c, y, x, index);
+                    tileCollection.add(tile);
+                    index++;
+                }
+                }
+            }
+        }
+
+    public void plantBombs(){
         for (int x : selectBombPositions()) {
             Tile toBeBomb = tileCollection.get(x);
-            toBeBomb.setIsBomb(true);
+            toBeBomb.setBomb(true);
             setCautionTiles(toBeBomb);
         }
     }
 
     public void setCautionTiles(Tile focusTile) {
         int focusPosition = focusTile.getIndex();
+        ArrayList<Tile> scannerList = new ArrayList<>();
+        for(Tile tile : tileCollection) {
+            scannerList.add(tile);
+        }
 
-        if (focusPosition <= this.getRowLength() - 1) {
-            if (focusPosition != 0 && focusPosition != getRowLength() - 1) {
-                tileCollection.get(focusPosition - 1).addBombToCount();
-                tileCollection.get(focusPosition + getRowLength() - 1).addBombToCount();
-                tileCollection.get(focusPosition + getRowLength()).addBombToCount();
-                tileCollection.get(focusPosition + getRowLength() + 1).addBombToCount();
+        if (focusPosition <= this.getRowCount() - 1) {
+            if (focusPosition != 0 && focusPosition != getRowCount() - 1) {
+                scannerList.get(focusPosition - 1).addBombToCount();
+                scannerList.get(focusPosition + getRowCount() - 1).addBombToCount();
+                scannerList.get(focusPosition + getRowCount()).addBombToCount();
+                scannerList.get(focusPosition + getRowCount() + 1).addBombToCount();
             } else if (focusPosition == 0) {
-                tileCollection.get(focusPosition + 1).addBombToCount();
-                tileCollection.get(focusPosition + getRowLength()).addBombToCount();
-                tileCollection.get(focusPosition + getRowLength() + 1).addBombToCount();
-            } else if (focusPosition == getRowLength() - 1) {
-                tileCollection.get(focusPosition - 1).addBombToCount();
-                tileCollection.get(focusPosition + getRowLength() - 1).addBombToCount();
-                tileCollection.get(focusPosition + getRowLength()).addBombToCount();
+                scannerList.get(focusPosition + 1).addBombToCount();
+                scannerList.get(focusPosition + getRowCount()).addBombToCount();
+                scannerList.get(focusPosition + getRowCount() + 1).addBombToCount();
+            } else if (focusPosition == getRowCount() - 1) {
+                scannerList.get(focusPosition - 1).addBombToCount();
+                scannerList.get(focusPosition + getRowCount() - 1).addBombToCount();
+                scannerList.get(focusPosition + getRowCount()).addBombToCount();
             }
-        } else if (focusPosition >= ((getColumnLength() - 1) * (getRowLength()))) {
-            if (focusPosition != ((getColumnLength() - 1) * (getRowLength()))
-                    && focusPosition != ((getRowLength() * getColumnLength()) - 1)) {
-                tileCollection.get(focusPosition + 1).addBombToCount();
-                tileCollection.get(focusPosition - 1).addBombToCount();
-                tileCollection.get(focusPosition - getRowLength() - 1).addBombToCount();
-                tileCollection.get(focusPosition - getRowLength()).addBombToCount();
-                tileCollection.get(focusPosition - getRowLength() + 1).addBombToCount();
-            } else if (focusPosition == ((getColumnLength() - 1) * (getRowLength()))) {
-                tileCollection.get(focusPosition + 1).addBombToCount();
-                tileCollection.get(focusPosition - getRowLength()).addBombToCount();
-                tileCollection.get(focusPosition - getRowLength() + 1).addBombToCount();
-            } else if (focusPosition == ((getRowLength() * getColumnLength()) - 1)) {
-                tileCollection.get(focusPosition - 1).addBombToCount();
-                tileCollection.get(focusPosition - getRowLength() - 1).addBombToCount();
-                tileCollection.get(focusPosition - getRowLength()).addBombToCount();
+        } else if (focusPosition >= ((getColumnCount() - 1) * (getRowCount()))) {
+            if (focusPosition != ((getColumnCount() - 1) * (getRowCount()))
+                    && focusPosition != ((getRowCount() * getColumnCount()) - 1)) {
+                scannerList.get(focusPosition + 1).addBombToCount();
+                scannerList.get(focusPosition - 1).addBombToCount();
+                scannerList.get(focusPosition - getRowCount() - 1).addBombToCount();
+                scannerList.get(focusPosition - getRowCount()).addBombToCount();
+                scannerList.get(focusPosition - getRowCount() + 1).addBombToCount();
+            } else if (focusPosition == ((getColumnCount() - 1) * (getRowCount()))) {
+                scannerList.get(focusPosition + 1).addBombToCount();
+                scannerList.get(focusPosition - getRowCount()).addBombToCount();
+                scannerList.get(focusPosition - getRowCount() + 1).addBombToCount();
+            } else if (focusPosition == ((getRowCount() * getColumnCount()) - 1)) {
+                scannerList.get(focusPosition - 1).addBombToCount();
+                scannerList.get(focusPosition - getRowCount() - 1).addBombToCount();
+                scannerList.get(focusPosition - getRowCount()).addBombToCount();
             }
         } else {
-            if ((focusPosition % getRowLength()) == 0 && focusPosition >= getRowLength()) {
-                tileCollection.get(focusPosition - getRowLength() - 1).addBombToCount();
-                tileCollection.get(focusPosition - getRowLength()).addBombToCount();
-                tileCollection.get(focusPosition + 1).addBombToCount();
-                tileCollection.get(focusPosition + getRowLength()).addBombToCount();
-                tileCollection.get(focusPosition + getRowLength() + 1).addBombToCount();
-            } else if ((focusPosition % getRowLength()) == getRowLength() - 1 && focusPosition >= getRowLength()) {
-                tileCollection.get(focusPosition - getRowLength()).addBombToCount();
-                tileCollection.get(focusPosition - getRowLength() + 1).addBombToCount();
-                tileCollection.get(focusPosition - 1).addBombToCount();
-                tileCollection.get(focusPosition + getRowLength() - 1).addBombToCount();
-                tileCollection.get(focusPosition + getRowLength()).addBombToCount();
+            if ((focusPosition % getRowCount()) == 0 && focusPosition >= getRowCount()) {
+                scannerList.get(focusPosition - getRowCount() - 1).addBombToCount();
+                scannerList.get(focusPosition - getRowCount()).addBombToCount();
+                scannerList.get(focusPosition + 1).addBombToCount();
+                scannerList.get(focusPosition + getRowCount()).addBombToCount();
+                scannerList.get(focusPosition + getRowCount() + 1).addBombToCount();
+            } else if ((focusPosition % getRowCount()) == getRowCount() - 1 && focusPosition >= getRowCount()) {
+                scannerList.get(focusPosition - getRowCount()).addBombToCount();
+                scannerList.get(focusPosition - getRowCount() + 1).addBombToCount();
+                scannerList.get(focusPosition - 1).addBombToCount();
+                scannerList.get(focusPosition + getRowCount() - 1).addBombToCount();
+                scannerList.get(focusPosition + getRowCount()).addBombToCount();
             } else {
-                tileCollection.get(focusPosition + 1).addBombToCount();
-                tileCollection.get(focusPosition - 1).addBombToCount();
-                tileCollection.get(focusPosition - getRowLength() - 1).addBombToCount();
-                tileCollection.get(focusPosition - getRowLength()).addBombToCount();
-                tileCollection.get(focusPosition - getRowLength() + 1).addBombToCount();
-                tileCollection.get(focusPosition + getRowLength() - 1).addBombToCount();
-                tileCollection.get(focusPosition + getRowLength()).addBombToCount();
-                tileCollection.get(focusPosition + getRowLength() + 1).addBombToCount();
+                scannerList.get(focusPosition + 1).addBombToCount();
+                scannerList.get(focusPosition - 1).addBombToCount();
+                scannerList.get(focusPosition - getRowCount() - 1).addBombToCount();
+                scannerList.get(focusPosition - getRowCount()).addBombToCount();
+                scannerList.get(focusPosition - getRowCount() + 1).addBombToCount();
+                scannerList.get(focusPosition + getRowCount() - 1).addBombToCount();
+                scannerList.get(focusPosition + getRowCount()).addBombToCount();
+                scannerList.get(focusPosition + getRowCount() + 1).addBombToCount();
             }
         }
     }
 }
-
