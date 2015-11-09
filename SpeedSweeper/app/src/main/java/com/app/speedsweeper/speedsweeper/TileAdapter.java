@@ -75,7 +75,7 @@ public class TileAdapter extends BaseAdapter {
             calculations on the views being inflated.
              */
             view = inflater.inflate(R.layout.namespace_test, gridView, false);
-            view = view.findViewById(R.id.linear_layout);
+            //view = view.findViewById(R.id.linear_layout);
 
            /*
            This is where the error occurs. view.findViewByID(x) is null because the Tile class has

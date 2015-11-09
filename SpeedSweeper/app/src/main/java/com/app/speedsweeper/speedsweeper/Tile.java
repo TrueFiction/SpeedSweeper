@@ -1,6 +1,7 @@
 package com.app.speedsweeper.speedsweeper;
 
 import android.content.Context;
+import android.util.AttributeSet;
 import android.view.View;
 import android.widget.Button;
 import java.lang.*;
@@ -60,12 +61,12 @@ public class Tile extends Button {
         super(context);
     }
 
-    public Tile (Context context, int x, int y, int index) {
+    public Tile (Context context, AttributeSet attrs) {
         super(context);
 /*        this.measure(x, y);
         this.index = index;
         this.setBackgroundResource(R.drawable.temp_pic2);*/
-        this.findViewById(R.id.tile);
+        //this.findViewById(R.id.tile);
     }
 
     @Override

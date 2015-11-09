@@ -30,8 +30,8 @@ public class GameActivity extends Activity {
         setContentView(R.layout.grid_parent);
 
         // default ActionBar button navigates to Activity positioned one above if pressed
-        final ActionBar actionBar = getActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
+        /*final ActionBar actionBar = getActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);*/
     }
 
     /*
@@ -56,17 +56,24 @@ public class GameActivity extends Activity {
      * Note that currently all Tile objects are null. Go to Tile constructor.
      */
     private void initialize() {
-        ArrayList<Tile> tiles;
+        ArrayList<Tile> tiles = new ArrayList<>();
         GridView gridView;
 
         /* The following is going to create a hypothetical BOARD of TILES based off of input values.
          It will also choose where to place the bombs, and then place them. None of this is currently
          linked to display.*/
-        Board startBoard = new Board(this, 8, 7, 7);
+        //Board startBoard = new Board(this, 8, 7, 7);
         //startBoard.populateTileCollection(this);
         //startBoard.plantBombs();
-        startBoard.trial(this);
-        tiles = startBoard.getTiles();
+        //startBoard.trial(this);
+        //tiles = startBoard.getTiles();
+
+        for (int x = 0; x < 5; x++) {
+            for (int y = 0; y < 5; y++) {
+                Tile tile = (Tile) findViewById(R.id.tile);
+                tiles.add(tile);
+            }
+        }
 
         //setAdapter works if tiles is populated with non-null Tile objects
         gridView = (GridView) findViewById(R.id.grid);

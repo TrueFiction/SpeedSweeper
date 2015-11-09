@@ -73,7 +73,7 @@ public class Board extends GridView {
         if (tiles.size() < (getRowCount() * getColumnCount() + 1)) {
             for (int x = 0; x < getRowCount(); x++) {
                 for (int y = 0; y < getColumnCount(); y++) {
-                    Tile tile = new Tile(c, 8, 7, 7);
+                    Tile tile = (Tile) findViewById(R.id.tile);
                     tiles.add(tile);
                 }
             }
@@ -84,7 +84,7 @@ public class Board extends GridView {
     Trial method to ensure the functionality of the updated Tile class and corresponding XML file.
      */
     public void trial(Context c){
-        Tile tile = new Tile(c, 9, 9, 9);
+        Tile tile = (Tile) findViewById(R.id.tile);
         tiles.add(tile);
     }
 
