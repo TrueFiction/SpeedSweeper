@@ -2,6 +2,7 @@ package com.app.speedsweeper.speedsweeper;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.content.res.Resources;
 import android.os.Bundle;
 import java.lang.*;
 import java.util.ArrayList;
@@ -62,12 +63,18 @@ public class GameActivity extends Activity {
          It will also choose where to place the bombs, and then place them. None of this is currently
          linked to display.*/
         Board startBoard = new Board(this, 8, 7, 7);
-        startBoard.populateTileCollection(this);
-        startBoard.plantBombs();
+        //startBoard.populateTileCollection(this);
+        //startBoard.plantBombs();
+        startBoard.trial(this);
         tiles = startBoard.getTiles();
 
         //setAdapter works if tiles is populated with non-null Tile objects
         gridView = (GridView) findViewById(R.id.grid);
         gridView.setAdapter(new TileAdapter(this, tiles, gridView));
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
     }
 }

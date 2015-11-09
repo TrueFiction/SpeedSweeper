@@ -1,5 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
     xmlns:tile_resource="com.app.speedsweeper.speedsweeper.Tile"
-    xmlns:general_resource="http://schemas.android.com/apk/res/android"
+    xmlns:app_resource="http://schemas.android.com/apk/res/android"
+    xmlns:tool_resource="http://schemas.android.com/tools"
+    xmlns:auto_resource="http://schemas.android.com/apk/res-auto"
 </resources>

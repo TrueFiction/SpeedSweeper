@@ -49,7 +49,7 @@ public class Tile extends Button {
     // Value of the GridLayout column this tile is position in.
     private int columnPosition;
     // Position of this view in AL tiles.
-    private int gridNum;
+    private int index;
     // Height of tile in pixels.
     private int layout_height;
     // Width of tile in pixels.
@@ -62,9 +62,10 @@ public class Tile extends Button {
 
     public Tile (Context context, int x, int y, int index) {
         super(context);
-        this.measure(x, y);
-        this.gridNum = index;
-        this.setBackgroundResource(R.drawable.temp_pic2);
+/*        this.measure(x, y);
+        this.index = index;
+        this.setBackgroundResource(R.drawable.temp_pic2);*/
+        this.findViewById(R.id.tile);
     }
 
     @Override
@@ -75,11 +76,11 @@ public class Tile extends Button {
     }
 
     public int getIndex() {
-        return gridNum;
+        return index;
     }
 
     public void setIndex(int position) {
-        gridNum = position;
+        index = position;
     }
 
     public void setFlagStatus(Boolean b) {

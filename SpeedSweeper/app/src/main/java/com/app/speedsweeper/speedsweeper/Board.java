@@ -81,6 +81,14 @@ public class Board extends GridView {
     }
 
     /*
+    Trial method to ensure the functionality of the updated Tile class and corresponding XML file.
+     */
+    public void trial(Context c){
+        Tile tile = new Tile(c, 9, 9, 9);
+        tiles.add(tile);
+    }
+
+    /*
     Upon looking at the following method, it seems as if it might be a better idea to pass Tile data
     from class to class by passing primitive data rather than by passing objects.
      */

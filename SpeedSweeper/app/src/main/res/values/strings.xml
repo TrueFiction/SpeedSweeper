@@ -2,9 +2,9 @@
     <string name="app_name">SpeedSweeper</string>
     <string name="bomb">isBomb</string>
     <string name="caution">isCaution</string>
-    <string name="enabler">http://schemas.android.com/apk/res/android</string>
-    <string name="Tile">com.app.speedsweeper.speedsweeper.Tile</string>
-    <string name="Board">com.app.speedsweeper.speedsweeper.Board</string>
-    <string name="index">com.app.speedsweeper.speedsweeper</string>
+    <string name="enabler">enabler</string>
+    <string name="Board">Board</string>
+    <string name="index">index</string>
+    <string name="tile_">tile</string>
     <string-array name="IDs"></string-array>
 </resources>

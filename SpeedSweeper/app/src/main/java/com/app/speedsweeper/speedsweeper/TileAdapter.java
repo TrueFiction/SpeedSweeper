@@ -74,7 +74,7 @@ public class TileAdapter extends BaseAdapter {
             Intelligently, the view becomes a variable that both accumulates value and performs
             calculations on the views being inflated.
              */
-            view = inflater.inflate(R.layout.tile_child, gridView, false);
+            view = inflater.inflate(R.layout.namespace_test, gridView, false);
             view = view.findViewById(R.id.linear_layout);
 
            /*
@@ -82,7 +82,7 @@ public class TileAdapter extends BaseAdapter {
            not been properly constructed as a Button class.
             */
             for (int x = 0; x < views.size(); x++){
-                Tile tile = (Tile) view.findViewById(x);
+                Tile tile = (Tile) view.findViewById(R.id.tile);
             }
 
             /*
