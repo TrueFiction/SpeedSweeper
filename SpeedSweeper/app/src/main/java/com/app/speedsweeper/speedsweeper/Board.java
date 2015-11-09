@@ -4,6 +4,8 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.GridView;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 import java.util.ArrayList;
 
@@ -23,6 +25,8 @@ public class Board extends GridView {
     int columns;
     // Total number of bombs that this board contains.
     int allBombs;
+    // Declaring int[] in an attempt to set unique id per tile.
+    int[] tileIds;
 
     // Random object for improved gameplay (see plantBombs).
     Random rand = new Random();
@@ -65,11 +69,11 @@ public class Board extends GridView {
     If the app is run now, the error would occur here. From time to time I decided to have this method
     operate on Views or Buttons in order to check the functionality of the code beyond this.
      */
-    public void populateTileCollection(Context c){
+    public void populateTileCollection(Context c) {
         if (tiles.size() < (getRowCount() * getColumnCount() + 1)) {
             for (int x = 0; x < getRowCount(); x++) {
                 for (int y = 0; y < getColumnCount(); y++) {
-                    Tile tile = new Tile(c);
+                    Tile tile = new Tile(c, 8, 7, 7);
                     tiles.add(tile);
                 }
             }
@@ -91,7 +95,7 @@ public class Board extends GridView {
     /*
     Returns tiles
      */
-    public ArrayList<Tile> getTiles(){
+    public ArrayList<Tile> getTiles() {
         return tiles;
     }
 
@@ -126,7 +130,7 @@ public class Board extends GridView {
     This method sets a variable specific to Tile, isBomb, to true or false and then marks the
     surrounding tiles with setCautionTiles method. No errors here.
      */
-    public void plantBombs(){
+    public void plantBombs() {
         for (int x : selectBombPositions()) {
             Tile toBeBomb = tiles.get(x);
             toBeBomb.setBomb(true);
@@ -140,10 +144,16 @@ public class Board extends GridView {
     public void setCautionTiles(Tile focusTile) {
         int focusPosition = focusTile.getIndex();
         ArrayList<Tile> scannerList = new ArrayList<>();
-        for(Tile tile : tiles) {
+        for (Tile tile : tiles) {
             scannerList.add(tile);
         }
+        scan(scannerList, focusPosition);
+    }
 
+    public void scan(ArrayList<Tile> scannerList, int focusPosition) {
+        /*
+        The first block here checks the very top row. The values should be set dynamically.
+         */
         if (focusPosition <= this.getRowCount() - 1) {
             if (focusPosition != 0 && focusPosition != getRowCount() - 1) {
                 scannerList.get(focusPosition - 1).addBombToCount();
@@ -159,6 +169,9 @@ public class Board extends GridView {
                 scannerList.get(focusPosition + getRowCount() - 1).addBombToCount();
                 scannerList.get(focusPosition + getRowCount()).addBombToCount();
             }
+        /*
+        The middle block checks the very bottom row. Values set dynamically.
+        */
         } else if (focusPosition >= ((getColumnCount() - 1) * (getRowCount()))) {
             if (focusPosition != ((getColumnCount() - 1) * (getRowCount()))
                     && focusPosition != ((getRowCount() * getColumnCount()) - 1)) {
@@ -176,6 +189,9 @@ public class Board extends GridView {
                 scannerList.get(focusPosition - getRowCount() - 1).addBombToCount();
                 scannerList.get(focusPosition - getRowCount()).addBombToCount();
             }
+        /*
+        Last block checks for all other tiles, dynamically.
+        */
         } else {
             if ((focusPosition % getRowCount()) == 0 && focusPosition >= getRowCount()) {
                 scannerList.get(focusPosition - getRowCount() - 1).addBombToCount();
@@ -199,9 +215,6 @@ public class Board extends GridView {
                 scannerList.get(focusPosition + getRowCount()).addBombToCount();
                 scannerList.get(focusPosition + getRowCount() + 1).addBombToCount();
             }
-        }
-        for (Tile tile : scannerList){
-
         }
     }
 }

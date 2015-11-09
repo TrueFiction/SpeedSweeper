@@ -1,12 +1,12 @@
 package com.app.speedsweeper.speedsweeper;
 
 import android.content.Context;
-import android.os.Parcelable;
-import android.util.AttributeSet;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import java.lang.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /********
  *
@@ -26,21 +26,6 @@ import java.lang.*;
  ********/
 
 public class Tile extends Button {
-
-    /*
-    The message of the block comment below applies to these three variables as well. Below is a quick
-    jotting of the implementation of one of these variables.
-        @Override
-        public Parcelable.Creator<MotionEvent> getMotionEventCreator() {
-            // flagClicked = onLongClickListener(); // Returns int[x]
-            // if (flagClicked != null)
-            //      toggleFlag = flagClicked.getPointerId(x);
-            return toggleFlag;
-        }   // Sends index value to GameActivity, where it is passed on to Board.
-            // Board is configured by methods called in Board that have an effect on Tile
-     It seems clear that this is not the right way to go about implementing this idea. With this
-     approach as a foundation, however, I believe the issues will be resolved.
-     */
 
     // Informs whether this tile has had a flag placed on it
     private Boolean flagStatus = false;
@@ -64,31 +49,37 @@ public class Tile extends Button {
     // Value of the GridLayout column this tile is position in.
     private int columnPosition;
     // Position of this view in AL tiles.
-    private int gridOrderPosition;
+    private int gridNum;
+    // Height of tile in pixels.
+    private int layout_height;
+    // Width of tile in pixels.
+    private int layout_width;
 
-    /*
-     * Constructor takes params rowC, colC, identity. Takes the corresponding values and assigns
-     * them to rowCoordinate, columnCoordinate, and logicID respectively.
-     */
 
     public Tile (Context context){
         super(context);
     }
 
-    public Tile (Context context, AttributeSet attrs, int defStyle) {
-        super(context, attrs);
-        this.setText("A");
-        this.setWidth(35);
-        this.setHeight(35);
+    public Tile (Context context, int x, int y, int index) {
+        super(context);
+        this.measure(x, y);
+        this.gridNum = index;
         this.setBackgroundResource(R.drawable.temp_pic2);
     }
 
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        layout_height = heightMeasureSpec;
+        layout_width = widthMeasureSpec;
+    }
+
     public int getIndex() {
-        return gridOrderPosition;
+        return gridNum;
     }
 
     public void setIndex(int position) {
-        gridOrderPosition = position;
+        gridNum = position;
     }
 
     public void setFlagStatus(Boolean b) {
@@ -155,5 +146,19 @@ public class Tile extends Button {
      */
     public void setFlag(){
         // onLongClickListener
+    }
+
+    /*
+    I want this to populate as quick as possible so that I can allocate Tiles to the IDs.
+     */
+
+    public void populateIDs() {
+        String[] array = getResources().getStringArray(R.array.IDs);
+        System.out.println("--array.length--" + array.length);
+        List<String> list = new ArrayList<String>();
+        list = Arrays.asList(array);
+        ArrayList<String> arrayList = new ArrayList<String>(list);
+        arrayList.add("TTS");
+        array = arrayList.toArray(new String[list.size()]);
     }
 }

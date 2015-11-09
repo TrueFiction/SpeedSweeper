@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<general_resource:Tile
+    general_resource:id="@id/tile_"
+    general_resource:index="0"
+    app:layout_height="35"
+    app:layout_width="35"
+    xmlns:general_resource="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res/android">
+</general_resource:Tile>
+
