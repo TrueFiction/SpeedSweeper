@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="Tile">
+        <attr name="flagStatus" format="boolean" />
+        <attr name="isBomb" format="boolean" />
+        <attr name="isExpanded" format="boolean" />
+        <attr name="bombCount" format="integer" />
+        <attr name="rowPosition" format="integer" />
+        <attr name="columnPosition" format="integer" />
+        <attr name="index" format="integer" />
+    </declare-styleable>
+</resources>

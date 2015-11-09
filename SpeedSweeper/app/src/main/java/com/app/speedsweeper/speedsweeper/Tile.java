@@ -1,6 +1,7 @@
 package com.app.speedsweeper.speedsweeper;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.Button;
@@ -21,8 +22,10 @@ import java.util.List;
  *  makes use of object hierarchy as much as possible.
  *
  *  Note: I read about Model-View Controllers and how important they are when creating a GUI. With
- *  this model in mind, perhaps GameActivity should play the role of controller. As for the other
- *  methods, it is clear that TileAdapter is responsible for ActionEvent processing, but a
+ *  this model in mind, perhaps GameActivity should play the role of controller.
+ *
+ *  11/9/2015
+ *  UPDATE: This class is solid. All data on java tile is matched to xml file.
  *
  ********/
 
@@ -56,17 +59,19 @@ public class Tile extends Button {
     // Width of tile in pixels.
     private int layout_width;
 
-
+    /*
+    This constructor should not be used, attrs are available.
+     */
     public Tile (Context context){
         super(context);
     }
 
+    /*
+    Default constructor is required for custom view.
+     */
     public Tile (Context context, AttributeSet attrs) {
-        super(context);
-/*        this.measure(x, y);
-        this.index = index;
-        this.setBackgroundResource(R.drawable.temp_pic2);*/
-        //this.findViewById(R.id.tile);
+        super(context, attrs);
+        setUpAttributes(attrs);
     }
 
     @Override
@@ -74,6 +79,21 @@ public class Tile extends Button {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         layout_height = heightMeasureSpec;
         layout_width = widthMeasureSpec;
+    }
+
+    private void setUpAttributes(AttributeSet attrs){
+        TypedArray a = getContext().getTheme().obtainStyledAttributes(attrs, R.styleable.Tile, 0, 0);
+        try {
+            index = a.getIndex(R.styleable.Tile_index);
+            bombCount = a.getInt(R.styleable.Tile_bombCount, 0);
+            flagStatus = a.getBoolean(R.styleable.Tile_flagStatus, false);
+            isBomb = a.getBoolean(R.styleable.Tile_isBomb, false);
+            isExpanded = a.getBoolean(R.styleable.Tile_isExpanded, false);
+            columnPosition = a.getInt(R.styleable.Tile_columnPosition, 0);
+            rowPosition = a.getInt(R.styleable.Tile_rowPosition, 0);
+        } finally {
+            a.recycle();
+        }
     }
 
     public int getIndex() {

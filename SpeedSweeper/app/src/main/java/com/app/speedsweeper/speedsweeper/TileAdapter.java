@@ -62,8 +62,9 @@ public class TileAdapter extends BaseAdapter {
         // LayoutInflater is necessary; GridView becomes new Layout.
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        // Variable below must be called before conditional.
+        // Variable below must be called before conditional (import functionality, I believe)
         View view;
+        LinearLayout layout = new LinearLayout(context);
 
         /*
         Condition below is true the first time the adapter is constructed. After that, convertView can be
@@ -74,8 +75,8 @@ public class TileAdapter extends BaseAdapter {
             Intelligently, the view becomes a variable that both accumulates value and performs
             calculations on the views being inflated.
              */
-            view = inflater.inflate(R.layout.namespace_test, gridView, false);
-            //view = view.findViewById(R.id.linear_layout);
+            view = inflater.inflate(R.layout.tile_child, gridView, false);
+            view = view.findViewById(R.id.linear_layout);
 
            /*
            This is where the error occurs. view.findViewByID(x) is null because the Tile class has
