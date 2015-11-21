@@ -1,97 +1,81 @@
 package com.app.speedsweeper.speedsweeper;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.widget.GridView;
+
+import org.w3c.dom.Attr;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 import java.util.ArrayList;
 
+/**
+ * Board is going to call actions that only occur on create.
+ */
+
 public class Board extends GridView {
-    // Local variable tiles
-    ArrayList<Tile> tiles;
 
-    /*
-    The following three variables should not be static, as they pertain to a particular instance of
-    board that may change within the activity (new game Action event).
-
-    Issue: Should these values be private?
-     */
     // Number of rows specified for this instance of board.
     int rows;
     // Number of columns specified for this instance of board.
     int columns;
     // Total number of bombs that this board contains.
     int allBombs;
-    // Declaring int[] in an attempt to set unique id per tile.
-    int[] tileIds;
 
     // Random object for improved gameplay (see plantBombs).
     Random rand = new Random();
 
-    /*
-    The first four constructors are default and are seemingly necessary to implement. The plan here
-    is to override either the second or third constructor. An AttributeSet value can be called if the
-    GridView in grid_parent.xml is replaced by a NameSpace and a style is defined.
-
-    It is this same problem that subclass Tile has with superclass Button.
-     */
-    public Board(Context context) {
-        super(context);
-    }
-
     public Board(Context context, AttributeSet attrs) {
         super(context, attrs);
+        setBoardAttributes(attrs);
+        this.rows = 8;
+        this.columns = 7;
+        this.allBombs = 7;
     }
 
-    public Board(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
+    private void setBoardAttributes(AttributeSet attrs){
+        TypedArray a = getContext().getTheme().obtainStyledAttributes(attrs, R.styleable.Board, 0, 0);
+
+        try {
+            rows = a.getInt(R.styleable.Board_rows, 8);
+            columns = a.getInt(R.styleable.Board_columns, 7);
+            allBombs = a.getInt(R.styleable.Board_allBombs, 7);
+        } finally {
+            a.recycle();
+        }
     }
 
-    public Board(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
+    public void layDownBoard(){
+        populateTileCollection();
+        selectBombPositions();
+        plantBombs();
     }
-
-    // The constructor I have been using. Has not caused errors, but only because Tile does first.
-    public Board(Context context, int row, int col, int numBombs) {
-        super(context);
-        rows = row;
-        columns = col;
-        allBombs = numBombs;
-
-        // If this is initialized where it is declared above, nullPointerExceptions occur.
-        tiles = new ArrayList<>();
-    }
-
+    private ArrayList<Tile> tiles = new ArrayList<>();
     /*
     If the app is run now, the error would occur here. From time to time I decided to have this method
     operate on Views or Buttons in order to check the functionality of the code beyond this.
      */
-    public void populateTileCollection(Context c) {
-        if (tiles.size() < (getRowCount() * getColumnCount() + 1)) {
-            for (int x = 0; x < getRowCount(); x++) {
-                for (int y = 0; y < getColumnCount(); y++) {
-                    Tile tile = (Tile) findViewById(R.id.tile);
-                    tiles.add(tile);
-                }
+    public void populateTileCollection() {
+        int index = 0;
+        for (int y = 0; y < getRowCount(); y++) {
+            for (int x = 0; x < getColumnCount(); x++) {
+                Tile tile = (Tile)findViewById(R.id.tile);
+                tile.setIndex(index);
+                tile.setYCoordinate(y);
+                tile.setXCoordinate(x);
+                tiles.add(tile);
+                index++;
             }
         }
     }
 
     /*
-    Trial method to ensure the functionality of the updated Tile class and corresponding XML file.
-     */
-    public void trial(Context c){
-        Tile tile = (Tile) findViewById(R.id.tile);
-        tiles.add(tile);
-    }
-
-    /*
-    Upon looking at the following method, it seems as if it might be a better idea to pass Tile data
-    from class to class by passing primitive data rather than by passing objects.
-     */
+Upon looking at the following method, it seems as if it might be a better idea to pass Tile data
+from class to class by passing primitive data rather than by passing objects.
+*/
     private int[] selectBombPositions() {
         int[] bombPositions = new int[allBombs];
         for (int x = 0; x < allBombs; x++) {
@@ -101,10 +85,14 @@ public class Board extends GridView {
     }
 
     /*
-    Returns tiles
-     */
-    public ArrayList<Tile> getTiles() {
-        return tiles;
+This method sets a variable specific to Tile, isBomb, to true or false and then marks the
+surrounding tiles with setCautionTiles method. No errors here.
+*/
+    public void plantBombs() {
+        for (int x : selectBombPositions()) {
+            tiles.get(x).setBomb(true);
+            setCautionTiles(tiles.get(x));
+        }
     }
 
     /*
@@ -134,17 +122,6 @@ public class Board extends GridView {
         rows = c;
     }
 
-    /*
-    This method sets a variable specific to Tile, isBomb, to true or false and then marks the
-    surrounding tiles with setCautionTiles method. No errors here.
-     */
-    public void plantBombs() {
-        for (int x : selectBombPositions()) {
-            Tile toBeBomb = tiles.get(x);
-            toBeBomb.setBomb(true);
-            setCautionTiles(toBeBomb);
-        }
-    }
 
     /*
     It is this method that makes use of the Tile subclass the most.

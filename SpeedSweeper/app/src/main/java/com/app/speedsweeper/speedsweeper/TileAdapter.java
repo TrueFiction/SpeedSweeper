@@ -8,6 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import java.util.ArrayList;
 
@@ -59,39 +60,19 @@ public class TileAdapter extends BaseAdapter {
      * @return View v ... The abstract hierarchical concatenation that is inflated.
      */
     public View getView(int position, View convertView, ViewGroup viewGroup) {
-        // LayoutInflater is necessary; GridView becomes new Layout.
+
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        // Variable below must be called before conditional (import functionality, I believe)
         View view;
-        LinearLayout layout = new LinearLayout(context);
 
-        /*
-        Condition below is true the first time the adapter is constructed. After that, convertView can be
-        assigned to null again, for instance on the occurrence of a new game action event.
-         */
         if (convertView == null){
-            /*
-            Intelligently, the view becomes a variable that both accumulates value and performs
-            calculations on the views being inflated.
-             */
-            view = inflater.inflate(R.layout.tile_child, gridView, false);
-            view = view.findViewById(R.id.linear_layout);
 
-           /*
-           This is where the error occurs. view.findViewByID(x) is null because the Tile class has
-           not been properly constructed as a Button class.
-            */
+            view = inflater.inflate(R.layout.tile_child, gridView, false);
+
             for (int x = 0; x < views.size(); x++){
                 Tile tile = (Tile) view.findViewById(R.id.tile);
+                tile.setIndex(x);
             }
-
-            /*
-            More code is needed here. After running it once, an error occurred that had to do with
-            either the inflater or the adapter not being flushed or closed. The return values are
-            set as they are in order to run through this program only once, so as to confirm its
-            functionality
-             */
 
             return view;
         } else {

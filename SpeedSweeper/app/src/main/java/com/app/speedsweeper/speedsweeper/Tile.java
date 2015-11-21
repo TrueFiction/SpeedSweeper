@@ -22,10 +22,8 @@ import java.util.List;
  *  makes use of object hierarchy as much as possible.
  *
  *  Note: I read about Model-View Controllers and how important they are when creating a GUI. With
- *  this model in mind, perhaps GameActivity should play the role of controller.
- *
- *  11/9/2015
- *  UPDATE: This class is solid. All data on java tile is matched to xml file.
+ *  this model in mind, perhaps GameActivity should play the role of controller. As for the other
+ *  methods, it is clear that TileAdapter is responsible for ActionEvent processing, but a
  *
  ********/
 
@@ -84,13 +82,13 @@ public class Tile extends Button {
     private void setUpAttributes(AttributeSet attrs){
         TypedArray a = getContext().getTheme().obtainStyledAttributes(attrs, R.styleable.Tile, 0, 0);
         try {
-            index = a.getIndex(R.styleable.Tile_index);
+            index = a.getInt(R.styleable.Tile_index, -1);
             bombCount = a.getInt(R.styleable.Tile_bombCount, 0);
             flagStatus = a.getBoolean(R.styleable.Tile_flagStatus, false);
             isBomb = a.getBoolean(R.styleable.Tile_isBomb, false);
             isExpanded = a.getBoolean(R.styleable.Tile_isExpanded, false);
-            columnPosition = a.getInt(R.styleable.Tile_columnPosition, 0);
-            rowPosition = a.getInt(R.styleable.Tile_rowPosition, 0);
+            columnPosition = a.getInt(R.styleable.Tile_columnPosition, -1);
+            rowPosition = a.getInt(R.styleable.Tile_rowPosition, -1);
         } finally {
             a.recycle();
         }
@@ -161,26 +159,5 @@ public class Tile extends Button {
 
     public void expandTile(View v, int drawable){
         v.setBackgroundResource(drawable);
-    }
-
-    /**
-     * Not a setter for field variable hasFlag. Adds flags to views on hold length of 0.5 seconds.
-     */
-    public void setFlag(){
-        // onLongClickListener
-    }
-
-    /*
-    I want this to populate as quick as possible so that I can allocate Tiles to the IDs.
-     */
-
-    public void populateIDs() {
-        String[] array = getResources().getStringArray(R.array.IDs);
-        System.out.println("--array.length--" + array.length);
-        List<String> list = new ArrayList<String>();
-        list = Arrays.asList(array);
-        ArrayList<String> arrayList = new ArrayList<String>(list);
-        arrayList.add("TTS");
-        array = arrayList.toArray(new String[list.size()]);
     }
 }

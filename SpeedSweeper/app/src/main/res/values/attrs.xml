@@ -9,4 +9,9 @@
         <attr name="columnPosition" format="integer" />
         <attr name="index" format="integer" />
     </declare-styleable>
+    <declare-styleable name="Board">
+        <attr name="rows" format="integer" />
+        <attr name="columns" format="integer" />
+        <attr name="allBombs" format="integer" />
+    </declare-styleable>
 </resources>

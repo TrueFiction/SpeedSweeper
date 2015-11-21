@@ -9,21 +9,26 @@ import java.util.ArrayList;
 import android.widget.GridView;
 
 /**
- * Note that the programming objective, at this point, is to create a functional Minesweeper game
- * whose board is initialized with default values. As it is being created dynamically, programming
- * involving tying GameActivity to prospective activities will not interfere with the structure of
- * the game.
  *
- * This class will serve as a hub between GUI functions (in TileAdapter) and value/logic functions (in Board and Tile).
+ * This class is the Model View Controller, responsible for game activity and calculations.
  *
- * Issue: should GameActivity extend Activity?
  */
 
 public class GameActivity extends Activity {
 
+    GridView gridView;
+
+    Board currentBoard;
+
     /*
-    setContentView calls R.layout.grid_parent because R.layout.tile_child is being added to the former
+    TODO someone needs to give these guys some values
+    This is not the correct way to do it. Individual Tiles do not have any values before they are
+    inflated.
      */
+    int currentX;
+    int currentY;
+    int currentTotal = currentX * currentY;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,9 +39,6 @@ public class GameActivity extends Activity {
         actionBar.setDisplayHomeAsUpEnabled(true);*/
     }
 
-    /*
-    Calling initialize onStart seems to produce the same result as if it is called onCreate.
-     */
     @Override
     public void onStart() {
         super.onStart();
@@ -57,25 +59,15 @@ public class GameActivity extends Activity {
      */
     private void initialize() {
         ArrayList<Tile> tiles = new ArrayList<>();
-        GridView gridView;
-
-        /* The following is going to create a hypothetical BOARD of TILES based off of input values.
-         It will also choose where to place the bombs, and then place them. None of this is currently
-         linked to display.*/
-        //Board startBoard = new Board(this, 8, 7, 7);
-        //startBoard.populateTileCollection(this);
-        //startBoard.plantBombs();
-        //startBoard.trial(this);
-        //tiles = startBoard.getTiles();
-
-        for (int x = 0; x < 5; x++) {
-            for (int y = 0; y < 5; y++) {
-                Tile tile = (Tile) findViewById(R.id.tile);
-                tiles.add(tile);
-            }
+        /*
+        There is a problem here associating the Tile objects in the tiles arraylist. Furthermore,
+        note that because the adapter is taking in an arraylist, there might not be a need to place
+        value on them using a for loop within adapter. Perhaps instead the adapter class is already
+        built for that.
+         */
+        for (int x = 0; x < 56; x++) {
+            tiles.add((Tile) findViewById(R.id.tile));
         }
-
-        //setAdapter works if tiles is populated with non-null Tile objects
         gridView = (GridView) findViewById(R.id.grid);
         gridView.setAdapter(new TileAdapter(this, tiles, gridView));
     }
